@@ -71,4 +71,36 @@ RSpec.describe "Api::V1::Articles", type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe "PATCH /articles/:id" do
+    subject { patch(api_v1_article_path(article.id), params: params) }
+
+    let(:params) { { article: attributes_for(:article) } }
+    let(:current_user) { create(:user) }
+    before { allow_any_instance_of(Api::V1::BaseApiController).to receive(:current_user).and_return(current_user) }
+
+    context "自分が所持する記事を更新" do
+      let(:article) { create(:article, user: current_user) }
+
+      it "レコードを更新できる" do
+        # binding.pry
+        expect { subject }.to change { article.reload.title }.from(article.title).to(params[:article][:title]) & change {
+                                                                                                                   article.reload.body
+                                                                                                                 }.from(article.body).to(params[:article][:body])
+        # binding.pry
+        expect(response).to have_http_status(:ok)
+        # expect { subject }.to change { article.reload.body }.from(article.body).to(params[:article][:body])
+        # expect { subject }.not_to change { Article.find(article_id).article.updated_at }　
+      end
+    end
+
+    context "所持していない記事を更新するとき" do
+      let(:other_user) { create(:user) }
+      let(:article) { create(:article, user: other_user) }
+      it "更新できない" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound) and change { Article.count }.by(0)
+        # binding.pry
+      end
+    end
+  end
 end
