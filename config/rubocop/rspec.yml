@@ -64,3 +64,6 @@ RSpec/ReturnFromStub:
 # context ごとに let! を使い分けたい場合があるため無効に
 RSpec/LetSetup:
   Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
