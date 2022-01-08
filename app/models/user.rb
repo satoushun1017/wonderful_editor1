@@ -43,4 +43,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   validates :name, presence: true
+  # validates :email, format: {with: VALID_EMAIL_REGEX}, allow_blank: true
+  # validates :email, presence: true
+  # validates :email, uniqueness: false
 end

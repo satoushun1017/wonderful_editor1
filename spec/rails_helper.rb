@@ -62,4 +62,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryBot::Syntax::Methods # 追加
+  config.define_derived_metadata do |meta|
+    meta[:aggregate_failures] = true unless meta.has_key?(:aggregate_failures)
+  end
 end
