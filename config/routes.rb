@@ -1,21 +1,11 @@
-# Rails.application.routes.draw do
-#   namespace :api do
-#     namespace :v1 do
-#       get "articles/index"
-#     end
-#   end
-#   # mount_devise_token_auth_for "User", at: "auth"
-#   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-#   namespace "api" do
-#     namespace "v1" do
-#       mount_devise_token_auth_for "User", at: "auth"
-#       resources :articles
-#     end
-#   end
-# end
-
 Rails.application.routes.draw do
   root to: "home#index"
+
+  # reload 対策
+  get "sign_up", to: "home#index"
+  get "sign_in", to: "home#index"
+  get "articles/new", to: "home#index"
+  get "articles/:id", to: "home#index"
 
   namespace :api do
     namespace :v1 do

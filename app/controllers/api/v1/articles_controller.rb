@@ -8,6 +8,7 @@ module Api::V1
 
     def show
       article = Article.find(params[:id])
+      # microposts = user.microposts.published.page(params[:page])
       render json: article, each_serializer: Api::V1::ArticlePreviewSerializer
     end
 
@@ -27,6 +28,10 @@ module Api::V1
       article.destroy!
       # render json: article, serializer: Api::V1::ArticleSerializer
     end
+
+    # def confirm　#下書き
+    #   article = current_user.articles.find(params[:id])
+    #   microposts = user.microposts.draft.page(params[:page])
 
     private
 
