@@ -7,20 +7,24 @@ module Api::V1
     end
 
     def show
-      article = Article.find(params[:id])
+      # binding.pry
+      article = Article.published.find(params[:id])
       # microposts = user.microposts.published.page(params[:page])
-      render json: article, each_serializer: Api::V1::ArticlePreviewSerializer
+      render json: article
+      # , each_serializer: Api::V1::ArticlePreviewSerializer
     end
 
     def create
       article = current_user.articles.create!(article_params)
-      render json: article, serializer: Api::V1::ArticleSerializer
+      render json: article
+      # , serializer: Api::V1::ArticleSerializer
     end
 
     def update
       article = current_user.articles.find(params[:id])
       article.update!(article_params)
-      render json: article, serializer: Api::V1::ArticleSerializer
+      render json: article
+      # , serializer: Api::V1::ArticleSerializer
     end
 
     def destroy
@@ -36,7 +40,7 @@ module Api::V1
     private
 
       def article_params
-        params.require(:article).permit(:title, :body)
+        params.require(:article).permit(:title, :body, :status)
       end
   end
 end

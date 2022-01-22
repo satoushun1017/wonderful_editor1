@@ -24,4 +24,5 @@ class Article < ApplicationRecord
   has_many :comments, dependent: :destroy
   validates :title, presence: true
   enum status: { draft: "draft", published: "published" }
+  # validates :status, inclusion: { in: Article.statuses.keys }
 end
